@@ -26,7 +26,6 @@ func AddAdmin(c *gin.Context) {
 	nickName := com.StrTo(c.PostForm("nick_name")).String()
 	departmentId := com.StrTo(c.PostForm("department_id")).MustInt()
 	positionId := com.StrTo(c.PostForm("position_id")).String()
-	schoolName := com.StrTo(c.PostForm("school_name")).String()
 
 	valid := validation.Validation{}
 
@@ -48,7 +47,6 @@ func AddAdmin(c *gin.Context) {
 		data["nick_name"] = nickName
 		data["department_id"] = departmentId
 		data["position_id"] = positionId
-		data["school_name"] = schoolName
 
 		isOk := true
 		if id < 1 {
@@ -67,10 +65,17 @@ func AddAdmin(c *gin.Context) {
 // @Summer 获取权限列表
 // @Param total int 总计
 // @Param list  []  权限列表
-func GetAdmin(c *gin.Context) {
+func GetAdmins(c *gin.Context) {
 	var data = make(map[string]interface{})
 	page := com.StrTo(c.PostForm("page")).MustInt()
 	data["list"] = Admin.GetAdminUserList(page, data)
 	data["total"] = Admin.GetTotalAdmin()
+	Common.Success(c, "操作成功", data)
+}
+
+func GetAdmin(c *gin.Context) {
+	//id := com.StrTo(c.PostForm("id")).MustInt()
+	var data = make(map[string]interface{})
+	data["user"] = Admin.GetAdminUser(1)
 	Common.Success(c, "操作成功", data)
 }

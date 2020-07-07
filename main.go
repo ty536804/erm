@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	_ "erm/Commands"
 	"erm/Pkg/Setting"
 	"erm/Router"
 	"fmt"

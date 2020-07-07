@@ -13,8 +13,8 @@ type Student struct {
 	StudentName    string `json:"student_name" gorm:"type:varchar(100); not null ; default ''; comment:'学生姓名' " `
 	ContactName    string `json:"contact_name" gorm:"type:varchar(100); not null ; default ''; comment:'联系人' " `
 	ContactTel     string `json:"contact_tel" gorm:"type:varchar(20); not null ; default ''; comment:'联系人电话' " `
-	StudentSex     int    `json:"student_sex" gorm:"default '0'; comment:'学生性别 0未知 1男 2女' "`
-	StudentAge     int    `json:"student_age" gorm:"default '0'; comment:'学生年龄' " `
+	StudentSex     int    `json:"student_sex" gorm:"default 0; comment:'学生性别 0未知 1男 2女' "`
+	StudentAge     int    `json:"student_age" gorm:"default 0; comment:'学生年龄' " `
 	Birthday       string `json:"birthday" gorm:"type:char(10)not null;default ''; comment:'生日' " `
 	CurrentSchool  string `json:"current_school" gorm:"type:varchar(100); not null ; default ''; comment:'当前学校' "`
 	CurrentClass   string `json:"current_class" gorm:"type:varchar(100); not null ; default ''; comment:'当前年级' "`

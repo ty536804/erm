@@ -5,7 +5,7 @@ import (
 )
 
 // @Summer class name
-type SClass struct {
+type ClassName struct {
 	Id       int    `json:"id" gorm:"primary_key"`
 	SName    string `json:"s_name" gorm:"type:varchar(100) ;not null; default ''; comment:'班级名称'"`
 	CourseId int    `json:"course_id" gorm:"comment:'课程' " `
