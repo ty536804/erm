@@ -8,7 +8,7 @@ import (
 
 // @Summer school name
 type School struct {
-	Id            int    `json:"id" gorm:"primary_key"`
+	Id            int    `json:"id" gorm:"primary_key:true"`
 	SchoolName    string `json:"school_name"  gorm:"type:varchar(100);not null; default ''; comment:'机构名称' " `
 	SchoolAddress string `json:"school_address" gorm:"type:varchar(100) not null; default '';comment:'机构地址'"`
 	ProvinceId    int    `json:"province_id" gorm:"default '0';comment:'省ID' " `
@@ -21,7 +21,7 @@ type School struct {
 	WeChartQR     string `json:"we_chart_qr" gorm:"type:varchar(100);not null;default '';comment:'机构二维码'" `
 	AdvisoryName  string `json:"advisory_name" gorm:"type:varchar(100);not null;default '';comment:'咨询名称' "`
 	AdvisoryTel   string `json:"advisory_tel" gorm:"type:char(20);not null;default '';comment:'咨询电话' "`
-	AdminId       int    `json:"admin_id" gorm:"default 0;comment:'机构管理员ID'"`
+	AdminId       int    `json:"admin_id" gorm:"index; default 0;comment:'机构管理员ID'"`
 
 	erm.Model
 }

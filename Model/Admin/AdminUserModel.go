@@ -8,7 +8,7 @@ import (
 )
 
 type SysAdminUser struct {
-	Id           int             `json:"id" gorm:"primary_key"`
+	Id           int             `json:"id" gorm:"primary_key:true"`
 	LoginName    string          `json:"login_name" grom:"type:varchar(100);not null; default ''; comment:'账号'" `
 	Pwd          string          `json:"pwd" gorm:"varchar(32); not null; default '';comment:'密码'" `
 	Status       int             `json:"status" gorm:"not null;default 1;comment:'状态 1 有效 0 无效'"`
@@ -19,7 +19,7 @@ type SysAdminUser struct {
 	NickName     string          `json:"nick_name" gorm:"type:varchar(100); not null; default ''; comment:'昵称' "`
 	DepartmentId string          `json:"department_id" gorm:"type:varchar(200);not null; default ''; comment:'部门ID'" `
 	PowerId      string          `json:"power_id" gorm:"type:text; not null; default ''; comment:'权限'" `
-	School       []School.School `json:"school" gorm:"AssociationForeignKey:AdminId"`
+	School       []School.School `gorm:"ForeignKey:AdminId;AssociationForeignKey:Id"`
 
 	erm.Model
 }
@@ -56,7 +56,7 @@ func EditAdminUser(id int, data interface{}) (isOk bool) {
 
 // @Summer 获取单条管理员信息
 func GetAdminUser(id int) (admin SysAdminUser) {
-	erm.Db.Related("School").Where("id = ?", id).Find(&admin)
+	erm.Db.Preload("School").Where("id = ?", id).Find(&admin)
 	return
 }
 
