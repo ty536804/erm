@@ -7,7 +7,7 @@ import (
 
 // @Summer  Course info
 type Course struct {
-	Id             int       `json:"id" gorm:"primary_key"`
+	Id             int       `json:"id" gorm:"primary_key:true;unique"`
 	CourseName     string    `json:"course_name" gorm:"type:varchar(100); not null default: '';comment:'课程名称'" `
 	Duration       string    `json:"duration" gorm:"type:varchar(100) not null; default '0'; comment:'时长' "`
 	StartTime      time.Time `json:"start_time" time_format:"2006-01-02 15:04:05" gorm:"comment:'开课时间' " `

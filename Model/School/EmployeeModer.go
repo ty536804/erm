@@ -7,7 +7,7 @@ import (
 
 // @Summer employee info
 type Employee struct {
-	Id               int       `json:"id" gorm:"primary_key"`
+	Id               int       `json:"id" gorm:"primary_key:true;unique"`
 	EmployeeName     string    `json:"employee_name" gorm:"comment:'员工姓名' " `
 	EmployeeTel      string    `json:"employee_tel" gorm:"type:char(20); not null; default ''; comment:'员工电话'" `
 	EmployeeAddress  string    `json:"employee_address" gorm:"type:varchar(200);not null; default ''; comment:'家庭地址' " `

@@ -12,26 +12,31 @@ import (
 )
 
 func init() {
-	DropDatabase()
 	GenerateDatabase()
 }
 
 func GenerateDatabase() {
 	erm.Db.AutoMigrate(&Admin.SysAdminUser{})
-	erm.Db.AutoMigrate(&Users.User{})
 	erm.Db.AutoMigrate(&Admin.SysAdminPower{})
-	erm.Db.AutoMigrate(&Admin.Department{})
-	erm.Db.AutoMigrate(&Courses.Schedule{})
-	erm.Db.AutoMigrate(&School.ClassName{})
-	erm.Db.AutoMigrate(&Courses.CourseMethod{})
+	erm.Db.AutoMigrate(&Admin.SysAdminDepartment{})
+
 	erm.Db.AutoMigrate(&Attends.AttendLog{})
-	erm.Db.AutoMigrate(&Rules.Rule{})
-	erm.Db.AutoMigrate(&Sales.Student{})
+
+	erm.Db.AutoMigrate(&Courses.Schedule{})
+	erm.Db.AutoMigrate(&Courses.CourseMethod{})
 	erm.Db.AutoMigrate(&Courses.Course{})
+
+	erm.Db.AutoMigrate(&Rules.Rule{})
+
+	erm.Db.AutoMigrate(&Sales.Student{})
 	erm.Db.AutoMigrate(&Sales.Listen{})
 	erm.Db.AutoMigrate(&Sales.Follower{})
+
+	erm.Db.AutoMigrate(&School.ClassName{})
 	erm.Db.AutoMigrate(&School.Employee{})
 	erm.Db.AutoMigrate(&School.School{})
+
+	erm.Db.AutoMigrate(&Users.User{})
 }
 func DropDatabase() {
 	DropAdmin()
@@ -53,8 +58,8 @@ func DropAdmin() {
 		erm.Db.DropTable(&Admin.SysAdminPower{})
 	}
 
-	if !erm.Db.HasTable(&Admin.Department{}) {
-		erm.Db.DropTable(&Admin.Department{})
+	if !erm.Db.HasTable(&Admin.SysAdminDepartment{}) {
+		erm.Db.DropTable(&Admin.SysAdminDepartment{})
 	}
 }
 

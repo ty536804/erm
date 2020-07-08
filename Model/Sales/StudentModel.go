@@ -8,7 +8,7 @@ import (
 
 // @Summer 线索管理
 type Student struct {
-	Id             int    `json:"id" gorm:"primary_key"`
+	Id             int    `json:"id" gorm:"primary_key:true;unique"`
 	Avatar         string `json:"avatar" gorm:"type:varchar(100); not null ; default ''; comment:'头像' " `
 	StudentName    string `json:"student_name" gorm:"type:varchar(100); not null ; default ''; comment:'学生姓名' " `
 	ContactName    string `json:"contact_name" gorm:"type:varchar(100); not null ; default ''; comment:'联系人' " `

@@ -8,12 +8,12 @@ import (
 
 // @Summer school name
 type School struct {
-	Id            int    `json:"id" gorm:"primary_key:true"`
+	Id            int    `json:"id" gorm:"primary_key:true;unique"`
 	SchoolName    string `json:"school_name"  gorm:"type:varchar(100);not null; default ''; comment:'机构名称' " `
 	SchoolAddress string `json:"school_address" gorm:"type:varchar(100) not null; default '';comment:'机构地址'"`
-	ProvinceId    int    `json:"province_id" gorm:"default '0';comment:'省ID' " `
-	CityId        int    `json:"city_id" gorm:"default '0';comment:'市ID' " `
-	Area          int    `json:"area" gorm:"default '0';comment:'区ID' " `
+	ProvinceId    int    `json:"province_id" gorm:"index:province_id;default '0';comment:'省ID' " `
+	CityId        int    `json:"city_id" gorm:"index:city_id;default '0';comment:'市ID' " `
+	AreaId        int    `json:"area_id" gorm:"index:area_id;default '0';comment:'区ID' " `
 	Longitude     string `json:"longitude" gorm:"type:varchar(100);not null;default '';default '';comment:'经度' " `
 	Latitude      string `json:"latitude" gorm:"type:varchar(100);not null;default ''; default ''; comment:'纬度' " `
 	SchoolLogo    string `json:"school_logo" gorm:"type:varchar(100);not null;default '';comment:'机构logo' "`
@@ -21,7 +21,7 @@ type School struct {
 	WeChartQR     string `json:"we_chart_qr" gorm:"type:varchar(100);not null;default '';comment:'机构二维码'" `
 	AdvisoryName  string `json:"advisory_name" gorm:"type:varchar(100);not null;default '';comment:'咨询名称' "`
 	AdvisoryTel   string `json:"advisory_tel" gorm:"type:char(20);not null;default '';comment:'咨询电话' "`
-	AdminId       int    `json:"admin_id" gorm:"index; default 0;comment:'机构管理员ID'"`
+	AdminId       int    `json:"admin_id" gorm:"index:admin_id; default 0;comment:'机构管理员ID'"`
 
 	erm.Model
 }
@@ -33,7 +33,7 @@ func AddSchool(data map[string]interface{}) (isOk bool) {
 		SchoolAddress: data["school_address"].(string),
 		ProvinceId:    data["province_id"].(int),
 		CityId:        data["city_id"].(int),
-		Area:          data["area"].(int),
+		AreaId:        data["area_id"].(int),
 		Latitude:      data["latitude"].(string),
 		Longitude:     data["longitude"].(string),
 		SchoolLogo:    data["school_logo"].(string),

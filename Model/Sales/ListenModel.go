@@ -7,7 +7,7 @@ import (
 
 // @Summer 试听记录
 type Listen struct {
-	Id          int       `json:"id" gorm:"primary_key"`
+	Id          int       `json:"id" gorm:"primary_key:true;unique"`
 	StudentId   int       `json:"student_id" gorm:"default '0'; comment:'学员ID' "`
 	CourseId    int       `json:"course_id" gorm:"comment:'课程ID'"`
 	SClassId    int       `json:"course_id" gorm:"comment:'班级ID'"`

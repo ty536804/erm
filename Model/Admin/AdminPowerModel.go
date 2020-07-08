@@ -8,10 +8,11 @@ import (
 
 // @Summer 权限表
 type SysAdminPower struct {
-	Id        int    `json:"id" gorm:"primary_key"`
+	Id        int    `json:"id" gorm:"primary_key:true;unique;"`
 	PowerName string `json:"power_name" gorm:"comment:'权限名称' " `
-	Pid       int    `json:"pid" gorm:"default 0; comment:'父ID' " `
-	Status    int    `json:"status" gorm:"default 0; comment:'状态 1有效 0无效'" `
+	Level     int    `json:"level" gorm:"not null;default 0;comment:'级别'"`
+	Pid       int    `json:"pid" gorm:"not null;default 0;comment:'父ID' " `
+	Status    int    `json:"status" gorm:"comment:'状态 1有效 0无效'" `
 	Desc      string `json:"desc" gorm:"type:varchar(200); not null; default '';comment:'描述'" `
 
 	erm.Model
@@ -22,6 +23,7 @@ func AddPower(data map[string]interface{}) (isOk bool) {
 	powerRes := erm.Db.Create(&SysAdminPower{
 		PowerName: data["power_name"].(string),
 		Pid:       data["pid"].(int),
+		Level:     data["pid"].(int),
 		Status:    data["status"].(int),
 		Desc:      data["desc"].(string),
 	})

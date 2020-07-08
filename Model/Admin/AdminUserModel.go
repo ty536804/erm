@@ -8,11 +8,11 @@ import (
 )
 
 type SysAdminUser struct {
-	Id           int             `json:"id" gorm:"primary_key:true"`
+	Id           int             `json:"id" gorm:"primary_key:true;unique"`
 	LoginName    string          `json:"login_name" grom:"type:varchar(100);not null; default ''; comment:'账号'" `
 	Pwd          string          `json:"pwd" gorm:"varchar(32); not null; default '';comment:'密码'" `
 	Status       int             `json:"status" gorm:"not null;default 1;comment:'状态 1 有效 0 无效'"`
-	CityID       int             `json:"city_id" gorm:"default '0'; comment:'城市'"`
+	CityID       int             `json:"city_id" gorm:"not null;default 0; comment:'城市'"`
 	Avatar       string          `json:"avatar" gorm:"type:varchar(100);not null; default ''; comment:'头像'" `
 	Tel          string          `json:"tel" gorm:"type:varchar(20); not null; default '';comment:'电话' "`
 	Email        string          `json:"email" gorm:"type:varchar(200); not null; default ''; comment:'邮箱'"`
@@ -41,7 +41,7 @@ func AddAdminUser(data map[string]interface{}) (isOk bool) {
 		log.Printf("add dmin failed,%v", adminRes)
 		return false
 	}
-	return true
+	return
 }
 
 // @Summer 编辑管理员
@@ -51,7 +51,7 @@ func EditAdminUser(id int, data interface{}) (isOk bool) {
 		log.Printf("edit dmin failed,%v", editRes)
 		return false
 	}
-	return true
+	return
 }
 
 // @Summer 获取单条管理员信息
@@ -77,11 +77,11 @@ func GetAdminUserList(page int, where interface{}) (admin []SysAdminUser) {
 }
 
 // @Summer 判断当前账号是否已经注册
-func ExistsByLoginName(loginName string) bool {
+func ExistsByLoginName(loginName string) (isOk bool) {
 	var user SysAdminUser
 	erm.Db.Select("id").Where("login_name = ?", loginName).First(&user)
-	if user.Id > 0 {
-		return true
+	if user.Id < 1 {
+		return false
 	}
-	return false
+	return
 }

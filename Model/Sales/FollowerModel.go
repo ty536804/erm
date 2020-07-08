@@ -7,7 +7,7 @@ import (
 
 // @Summer 跟进记录
 type Follower struct {
-	Id           int       `json:"id" gorm:"primary_key"`
+	Id           int       `json:"id" gorm:"primary_key:true;unique"`
 	StudentId    int       `json:"student_id" gorm:"default '0'; comment:'学员ID' "`
 	Status       int       `json:"status" gorm:"default '0'; comment:'跟进状态' " `
 	EmployeeId   int       `json:"employee_id" gorm:"default '0'; comment:'跟进人ID' "`
