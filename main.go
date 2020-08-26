@@ -6,6 +6,7 @@ import (
 	"erm/Pkg/Setting"
 	"erm/Router"
 	"fmt"
+	"github.com/DeanThompson/ginpprof"
 	"log"
 	"net/http"
 	"os"
@@ -16,7 +17,7 @@ import (
 
 func main() {
 	router := Router.InitRouter()
-
+	ginpprof.Wrap(router)
 	srv := &http.Server{
 		Addr:           fmt.Sprintf(":%d", Setting.HTTPPort),
 		Handler:        router,

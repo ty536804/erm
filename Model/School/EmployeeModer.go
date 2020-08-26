@@ -2,6 +2,7 @@ package School
 
 import (
 	erm "erm/Database"
+	"erm/Model/Sales"
 	"time"
 )
 
@@ -19,5 +20,10 @@ type Employee struct {
 	RuleId           int       `json:"rule_id" gorm:"comment:'权限' " `
 	Sex              int       `json:"sex" gorm:"comment:'性别 0男 1女' " `
 
+	Follower []Sales.Follower `gorm:"ForeignKey:EmployeeId;AssociationForeignKey:Id"`
 	erm.Model
+}
+
+func GetEmployee(id int) {
+	erm.Db.Preload("Follower")
 }

@@ -18,13 +18,14 @@ func InitRouter() *gin.Engine {
 	r := gin.New()
 	r.Use(gin.Logger(), gin.Recovery())
 
-	apiV1 := r.Group("/api/v1")
-	apiV1.Use(Jwt.JWT())
+	v1 := r.Group("/api/v1")
+	v1.Use(Jwt.JWT())
 	{
 		//管理员操作
-		r.GET("/admin", V1.GetAdmin)
-		apiV1.GET("/adminList", V1.GetAdmins)
-		apiV1.GET("/adminAdd", V1.AddAdmin)
+		v1.POST("/admin", V1.GetAdmin)
+		v1.POST("/adminList", V1.GetAdmins)
+		v1.POST("/adminAdd", V1.AddAdmin)
+		v1.POST("/login", V1.Login)
 	}
 	return r
 }

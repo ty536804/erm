@@ -1,7 +1,7 @@
 package Admin
 
 import (
-	erm "erm/Database"
+	crm "erm/Database"
 	"erm/Model/School"
 	"erm/Pkg/Setting"
 	"log"
@@ -21,12 +21,12 @@ type SysAdminUser struct {
 	PowerId      string          `json:"power_id" gorm:"type:text; not null; default ''; comment:'权限'" `
 	School       []School.School `gorm:"ForeignKey:AdminId;AssociationForeignKey:Id"`
 
-	erm.Model
+	crm.Model
 }
 
 // @Summer 添加管理员
 func AddAdminUser(data map[string]interface{}) (isOk bool) {
-	adminRes := erm.Db.Create(&SysAdminUser{
+	adminRes := crm.Db.Create(&SysAdminUser{
 		LoginName: data["login_name"].(string),
 		Pwd:       data["login_name"].(string),
 		Status:    data["status"].(int),
@@ -46,7 +46,7 @@ func AddAdminUser(data map[string]interface{}) (isOk bool) {
 
 // @Summer 编辑管理员
 func EditAdminUser(id int, data interface{}) (isOk bool) {
-	editRes := erm.Db.Model(&SysAdminUser{}).Where("id = ?", id).Update(data)
+	editRes := crm.Db.Model(&SysAdminUser{}).Where("id = ?", id).Update(data)
 	if editRes.Error != nil {
 		log.Printf("edit dmin failed,%v", editRes)
 		return false
@@ -56,13 +56,13 @@ func EditAdminUser(id int, data interface{}) (isOk bool) {
 
 // @Summer 获取单条管理员信息
 func GetAdminUser(id int) (admin SysAdminUser) {
-	erm.Db.Preload("School").Where("id = ?", id).Find(&admin)
+	crm.Db.Preload("School").Where("id = ?", id).Find(&admin)
 	return
 }
 
 // @Summer 统计管理员信息
 func GetTotalAdmin() (count int) {
-	erm.Db.Where(&SysAdminUser{}).Count(&count)
+	crm.Db.Where(&SysAdminUser{}).Count(&count)
 	return
 }
 
@@ -72,16 +72,22 @@ func GetAdminUserList(page int, where interface{}) (admin []SysAdminUser) {
 	if page >= 1 {
 		offset = (page - 1) * Setting.PageSize
 	}
-	erm.Db.Where(where).Limit(Setting.PageSize).Offset(offset).Find(&admin)
+	crm.Db.Where(where).Limit(Setting.PageSize).Offset(offset).Find(&admin)
 	return
 }
 
 // @Summer 判断当前账号是否已经注册
 func ExistsByLoginName(loginName string) (isOk bool) {
 	var user SysAdminUser
-	erm.Db.Select("id").Where("login_name = ?", loginName).First(&user)
+	crm.Db.Select("id").Where("login_name = ?", loginName).First(&user)
 	if user.Id < 1 {
 		return false
 	}
+	return
+}
+
+// @Summer 通过用户名获取当前用户信息
+func GetAdmin(uname string) (admin SysAdminUser) {
+	crm.Db.Where("login_name = ?", uname).First(&admin)
 	return
 }

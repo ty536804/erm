@@ -24,7 +24,7 @@ func GenerateToken(loginName, pwd string) (string, error) {
 		pwd,
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
-			Issuer:    "erm",
+			Issuer:    "crm",
 		},
 	}
 

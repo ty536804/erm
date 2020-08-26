@@ -16,3 +16,7 @@ type Listen struct {
 
 	erm.Model
 }
+
+func AddListen(data map[string]interface{}) {
+
+}
